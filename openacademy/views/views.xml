@@ -1,7 +1,7 @@
 <odoo>
   <data>
     <!-- explicit list view definition -->
-    <!--
+
     <record model="ir.ui.view" id="openacademy.list">
       <field name="name">openacademy list</field>
       <field name="model">openacademy.openacademy</field>
@@ -13,47 +13,103 @@
         </tree>
       </field>
     </record>
-    -->
+
 
     <!-- actions opening views on models -->
-    <!--
+
     <record model="ir.actions.act_window" id="openacademy.action_window">
       <field name="name">openacademy window</field>
       <field name="res_model">openacademy.openacademy</field>
       <field name="view_mode">tree,form</field>
     </record>
-    -->
-
-    <!-- server action to the one above -->
-    <!--
-    <record model="ir.actions.server" id="openacademy.action_server">
-      <field name="name">openacademy server</field>
-      <field name="model_id" ref="model_openacademy_openacademy"/>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": self._name,
-        }
-      </field>
-    </record>
-    -->
 
     <!-- Top menu item -->
-    <!--
+
     <menuitem name="openacademy" id="openacademy.menu_root"/>
-    -->
+
     <!-- menu categories -->
-    <!--
+
     <menuitem name="Menu 1" id="openacademy.menu_1" parent="openacademy.menu_root"/>
     <menuitem name="Menu 2" id="openacademy.menu_2" parent="openacademy.menu_root"/>
-    -->
+
     <!-- actions -->
-    <!--
+
     <menuitem name="List" id="openacademy.menu_1_list" parent="openacademy.menu_1"
               action="openacademy.action_window"/>
-    <menuitem name="Server to list" id="openacademy" parent="openacademy.menu_2"
-              action="openacademy.action_server"/>
-    -->
+    <!-- session form view -->
+    <record model="ir.ui.view" id="session_form_view">
+      <field name="name">session.form</field>
+      <field name="model">openacademy.session</field>
+      <field name="arch" type="xml">
+        <form string="Session Form">
+          <sheet>
+            <group string="General">
+              <field name="course_id"/>
+              <field name="name"/>
+              <field name="instructor_id"/>
+            </group>
+            <group string="Schedule">
+              <field name="start_date"/>
+              <field name="duration"/>
+              <field name="seats"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- session tree/list view -->
+    <record model="ir.ui.view" id="session_tree_view">
+       <field name="name">session.tree</field>
+       <field name="model">openacademy.session</field>
+       <field name="arch" type="xml">
+        <tree string="Session Tree">
+            <field name="name"/>
+            <field name="course_id"/>
+        </tree>
+       </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="session_list_action">
+      <field name="name">Sessions</field>
+      <field name="res_model">openacademy.session</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="session_menu" name="Sessions"
+      parent="openacademy.menu_root" action="session_list_action"/>
+
+    <record id="action_academy_teachers" model="ir.actions.act_window">
+      <field name="name">Academy teachers</field>
+      <field name="res_model">academy.teachers</field>
+    </record>
+
+    <menuitem sequence="0" id="menu_academy" name="Academy"/>
+    <menuitem id="menu_academy_content" parent="menu_academy"
+              name="Academy Content"/>
+    <menuitem id="menu_academy_content_teachers"
+              parent="menu_academy_content"
+              action="action_academy_teachers"/>
+
+    <record id="academy_teacher_form" model="ir.ui.view">
+       <field name="name">Academy teachers: form</field>
+       <field name="model">academy.teachers</field>
+       <field name="arch" type="xml">
+          <form>
+            <sheet>
+              <label for="name"/> <field name="name"/>
+              <label for="biography"/>
+              <field name="biography"/>
+              <field name="course_ids">
+               <tree string="Courses" editable="bottom">
+                 <field name="name"/>
+               </tree>
+             </field>
+            </sheet>
+          </form>
+      </field>
+      </record>
+
   </data>
 </odoo>

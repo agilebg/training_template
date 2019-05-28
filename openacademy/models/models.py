@@ -46,3 +46,9 @@ class Courses(models.Model):
     _inherit = 'product.template'
 
     teacher_id = fields.Many2one('academy.teachers', string="Teacher")
+
+
+class Invoice(models.Model):
+    _inherit = 'account.invoice.line'
+
+    name2 = fields.Char(string='Campo di prova')

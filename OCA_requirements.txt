@@ -8,7 +8,7 @@ PyXB==1.2.4
 codicefiscale==0.9
 phonenumbers==7.0.4
 pycups==1.9.72
-suds==0.4
+suds==1.0.0
 ipwhois==0.10.2
 pysftp==0.2.8
 unidecode==0.04.17
